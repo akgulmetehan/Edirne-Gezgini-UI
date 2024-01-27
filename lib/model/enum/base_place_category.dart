@@ -1,4 +1,5 @@
 enum BasePlaceCategory{
   accommodation,
-  place
+  place,
+  restaurant
 }

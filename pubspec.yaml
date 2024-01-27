@@ -80,6 +80,10 @@ flutter:
    - images/edirne.jpg
    - images/hilly-hotel.jpg
    - images/ND-Suit-Hotel.jpg
+   - images/aydın.jpg
+   - images/osman.jpg
+   - images/kırkpınar.jpg
+   - images/niyazi.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

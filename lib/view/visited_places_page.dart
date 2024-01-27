@@ -11,14 +11,14 @@ import 'package:edirne_gezgini_ui/constants.dart' as constants;
 
 import '../model/place.dart';
 
-class ToVisitPage extends StatefulWidget {
-  const ToVisitPage({super.key});
+class VisitedPlacesPage extends StatefulWidget {
+  const VisitedPlacesPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _ToVisitPageState();
+  State<StatefulWidget> createState() => _VisitedPlacesPageState();
 }
 
-class _ToVisitPageState extends State<ToVisitPage> {
+class _VisitedPlacesPageState extends State<VisitedPlacesPage> {
   List<VisitedPlace> visitedPlaces = TemporaryDatabase()
       .visitedPlaces
       .where((toVisit) => toVisit.category == BasePlaceCategory.place)
