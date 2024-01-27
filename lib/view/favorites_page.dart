@@ -61,7 +61,7 @@ class _FavoritePageState extends State<FavoritePage> {
           SizedBox(
             width: width * 100,
             height: height * 65,
-            child: favoritePlacesListView(favoritePlaces),
+            child: favoritePlacesListView(favoritePlaces, width*0.5, height*1),
           ),
 
           const Padding(
@@ -81,14 +81,14 @@ class _FavoritePageState extends State<FavoritePage> {
           SizedBox(
             width: width * 100,
             height: height * 65,
-            child: favoriteAccommodationsListView(favoriteAccommodations),
+            child: favoriteAccommodationsListView(favoriteAccommodations, width*0.5, height*1),
           ),
         ],
       ),
     );
   }
 
-  Widget favoritePlacesListView(List<Favorite> favoritePlaces) {
+  Widget favoritePlacesListView(List<Favorite> favoritePlaces, double width, double height) {
     return ListView.builder(
         padding: const EdgeInsets.all(8),
         scrollDirection: Axis.horizontal,
@@ -102,13 +102,16 @@ class _FavoritePageState extends State<FavoritePage> {
             child:
                 PlaceCard(
                     title: currentPlace.title,
-                    image: currentPlace.image
+                    image: currentPlace.image,
+                    width: width,
+                    height: height,
+                    isVisited: false,
                 ),
           );
         });
   }
 
-  Widget favoriteAccommodationsListView(List<Favorite> favoriteAccommodations) {
+  Widget favoriteAccommodationsListView(List<Favorite> favoriteAccommodations, double width, double height) {
     return ListView.builder(
         padding: const EdgeInsets.all(8),
         scrollDirection: Axis.horizontal,
@@ -122,7 +125,11 @@ class _FavoritePageState extends State<FavoritePage> {
             padding: const EdgeInsets.all(8.0),
             child: PlaceCard(
                 title: currentAccommodation.title,
-                image: currentAccommodation.image),
+                image: currentAccommodation.image,
+                width: width,
+                height: height,
+                isVisited: false,
+            ),
           );
         });
   }

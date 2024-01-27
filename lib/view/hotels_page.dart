@@ -33,14 +33,14 @@ class _HotelsPageState extends State<HotelsPage> {
             //list hotels
             SizedBox(
               width: width * 100,
-              height: height * 80,
-              child: hotelsListView(hotels),
+              height: height * 65,
+              child: hotelsListView(hotels, width*1, height*1),
             )
           ],
         ));
   }
 
-  Widget hotelsListView(List<Accommodation> hotels) {
+  Widget hotelsListView(List<Accommodation> hotels, double width, double height) {
     return ListView.builder(
         padding: const EdgeInsets.all(8.0),
         itemCount: hotels.length,
@@ -49,7 +49,13 @@ class _HotelsPageState extends State<HotelsPage> {
 
           return GestureDetector(
             child:
-                PlaceCard(title: currentHotel.title, image: currentHotel.image),
+                PlaceCard(
+                    title: currentHotel.title,
+                    image: currentHotel.image,
+                    width: width,
+                    height: height,
+                    isVisited: false,
+                ),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context)=> PlaceDetailsPage(place: currentHotel, category: BasePlaceCategory.accommodation,)));
             },

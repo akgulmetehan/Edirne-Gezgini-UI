@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:edirne_gezgini_ui/model/enum/base_place_category.dart';
+import 'package:edirne_gezgini_ui/view/account_page.dart';
 import 'package:edirne_gezgini_ui/view/place_details_page.dart';
+import 'package:edirne_gezgini_ui/view/restaurants_page.dart';
 import 'package:flutter/material.dart';
 
 import '../database/temporary_database.dart';
@@ -38,33 +40,35 @@ class _HomePageState extends State<HomePage> {
           leading: PopupMenuButton<String>(
             onSelected: (String result) {},
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-              const PopupMenuItem<String>(
-                value: 'Müzeler',
-                child: Text('Müzeler', style: TextStyle(fontSize: 20)),
-              ),
-              PopupMenuItem<String>(
-                value: 'Oteller',
-                child: const Text('Oteller', style: TextStyle(fontSize: 20),),
-                onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> const HotelsPage())),
-              ),
+              museumsPopupMenuItem(),
+
+              restaurantsPopupMenuItem(context),
+
+              hotelsPopupMenuItem(context)
             ],
+
             icon: const Icon(Icons.menu),
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black, width: 2),
-                  image: const DecorationImage(
-                    image: AssetImage("images/profil.jpg"),
+            GestureDetector(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    border: Border.all(color: Colors.black, width: 2),
+                    image: const DecorationImage(
+                      image: AssetImage("images/profil.jpg"),
+                    ),
                   ),
                 ),
               ),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> const AccountPage()));
+              },
             )
           ],
           title: const Center(
@@ -95,9 +99,9 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             width: width*100,
             height: height*65,
-            child: historicalPlacesListView(historicalPlaces),
+            child: historicalPlacesListView(historicalPlaces, width*0.5, height*1),
           ),
-          
+
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: AutoSizeText(
@@ -115,14 +119,14 @@ class _HomePageState extends State<HomePage> {
           
           //list museums
           SizedBox(
-              width: width*100,
+              width: width*50,
               height: height*65,
-              child: museumsListView(museums)),
+              child: museumsListView(museums, width*0.5, height*1)),
         ]),
       );
   }
 
-  Widget historicalPlacesListView(List<Place> historicalPlaces) {
+  Widget historicalPlacesListView(List<Place> historicalPlaces, double width, double height) {
     return ListView.builder(
       padding: const EdgeInsets.all(8),
       scrollDirection: Axis.horizontal,
@@ -136,6 +140,9 @@ class _HomePageState extends State<HomePage> {
             child: PlaceCard(
               title: currentHistoricalPlace.title,
               image: currentHistoricalPlace.image,
+              width: width,
+              height: height,
+              isVisited: false,
             ),
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=> PlaceDetailsPage(place: currentHistoricalPlace, category: BasePlaceCategory.place,)));
@@ -146,7 +153,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget museumsListView(List<Place> museums) {
+  Widget museumsListView(List<Place> museums, double width, double height) {
     return ListView.builder(
       padding: const EdgeInsets.all(8),
       scrollDirection: Axis.horizontal,
@@ -160,6 +167,9 @@ class _HomePageState extends State<HomePage> {
             child: PlaceCard(
               title: currentMuseum.title,
               image: currentMuseum.image,
+              width: width,
+              height: height,
+              isVisited: false,
             ),
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=> PlaceDetailsPage(place: currentMuseum, category: BasePlaceCategory.place,)));
@@ -169,4 +179,29 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
+
+  PopupMenuItem<String> restaurantsPopupMenuItem(BuildContext context){
+    return PopupMenuItem<String>(
+      value: 'Restoranlar',
+      child: const Text('Restoranlar', style: TextStyle(fontSize: 20),),
+      onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> const RestaurantsPage())),
+    );
+  }
+
+  PopupMenuItem<String> hotelsPopupMenuItem(BuildContext context){
+    return PopupMenuItem<String>(
+      value: 'Oteller',
+      child: const Text('Oteller', style: TextStyle(fontSize: 20),),
+      onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> const HotelsPage())),
+    );
+  }
+
+  PopupMenuItem<String> museumsPopupMenuItem(){
+    return const PopupMenuItem<String>(
+      value: 'Müzeler',
+      child: Text('Müzeler', style: TextStyle(fontSize: 20)),
+    );
+  }
+
+
 }
