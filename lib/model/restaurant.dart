@@ -10,6 +10,6 @@ class Restaurant extends BasePlace{
 
   final String location;
 
-  Restaurant({required this.title, required this.image, required this.info, required this.location});
+  Restaurant({required this.title, required this.image, required this.info, required this.location, required super.id, required super.createdAt, required super.updatedAt});
 
 }

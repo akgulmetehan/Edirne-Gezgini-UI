@@ -13,5 +13,5 @@ class Place extends BasePlace{
 
   final PlaceCategory category;
 
-  Place({required this.title, required this.image, required this.category, this.info, required this.location});
+  Place({required this.title, required this.image, required this.category, this.info, required this.location, required super.id, required super.createdAt, required super.updatedAt});
 }
