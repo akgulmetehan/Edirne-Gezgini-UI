@@ -1,7 +1,8 @@
+
 import 'package:edirne_gezgini_ui/view/favorites_page.dart';
 import 'package:edirne_gezgini_ui/view/get_route_page.dart';
 import 'package:edirne_gezgini_ui/view/home_page.dart';
-import 'package:edirne_gezgini_ui/view/visited_places_page.dart';
+import 'package:edirne_gezgini_ui/view/visitations_page.dart';
 import 'package:flutter/material.dart';
 import 'package:edirne_gezgini_ui/constants.dart' as constants;
 
@@ -25,12 +26,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
             children: const [
               HomePage(),
               FavoritePage(),
-              VisitedPlacesPage(),
-              GetRoutePage()
+              VisitationsPage(),
+              GetRoutePage(),
             ],
           ),
           bottomNavigationBar: NavigationBar(
-            destinations: [home(), favorites(), visit(), getRoute()],
+            destinations: [home(), favorites(), visitations(), getRoute()],
             indicatorColor: constants.bottomNavBarColor.withOpacity(0.9),
             selectedIndex: currentIndex,
             elevation: 0,
@@ -58,7 +59,7 @@ NavigationDestination favorites() {
       label: "Favorilerim");
 }
 
-NavigationDestination visit() {
+NavigationDestination visitations() {
   return const NavigationDestination(
       selectedIcon: Icon(Icons.location_on_outlined),
       icon: Icon(Icons.location_on_outlined),
