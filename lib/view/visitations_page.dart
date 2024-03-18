@@ -3,7 +3,7 @@ import 'package:edirne_gezgini_ui/database/temporary_database.dart';
 import 'package:edirne_gezgini_ui/model/accommodation.dart';
 import 'package:edirne_gezgini_ui/model/enum/base_place_category.dart';
 import 'package:edirne_gezgini_ui/model/restaurant.dart';
-import 'package:edirne_gezgini_ui/model/visited.dart';
+import 'package:edirne_gezgini_ui/model/visitation.dart';
 import 'package:edirne_gezgini_ui/widget/place_card.dart';
 import 'package:flutter/material.dart';
 import 'package:edirne_gezgini_ui/constants.dart' as constants;
@@ -11,23 +11,23 @@ import 'package:edirne_gezgini_ui/constants.dart' as constants;
 
 import '../model/place.dart';
 
-class VisitedPlacesPage extends StatefulWidget {
-  const VisitedPlacesPage({super.key});
+class VisitationsPage extends StatefulWidget {
+  const VisitationsPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _VisitedPlacesPageState();
+  State<StatefulWidget> createState() => _VisitationsPageState();
 }
 
-class _VisitedPlacesPageState extends State<VisitedPlacesPage> {
-  List<VisitedPlace> visitedPlaces = TemporaryDatabase()
+class _VisitationsPageState extends State<VisitationsPage> {
+  List<Visitation> visitedPlaces = TemporaryDatabase()
       .visitedPlaces
       .where((toVisit) => toVisit.category == BasePlaceCategory.place)
       .toList();
-  List<VisitedPlace> visitedAccommodations = TemporaryDatabase()
+  List<Visitation> visitedAccommodations = TemporaryDatabase()
       .visitedPlaces
       .where((toVisit) => toVisit.category == BasePlaceCategory.accommodation)
       .toList();
-  List<VisitedPlace> visitedRestaurants = TemporaryDatabase()
+  List<Visitation> visitedRestaurants = TemporaryDatabase()
       .visitedPlaces
       .where((toVisit) => toVisit.category == BasePlaceCategory.restaurant)
       .toList();
@@ -112,7 +112,7 @@ class _VisitedPlacesPageState extends State<VisitedPlacesPage> {
     );
   }
 
-  Widget toVisitsPlacesListView(List<VisitedPlace> toVisitPlaces, double width, double height) {
+  Widget toVisitsPlacesListView(List<Visitation> toVisitPlaces, double width, double height) {
     return ListView.builder(
         padding: const EdgeInsets.all(8),
         scrollDirection: Axis.horizontal,
@@ -134,7 +134,7 @@ class _VisitedPlacesPageState extends State<VisitedPlacesPage> {
         });
   }
 
-  Widget toVisitsAccommodationsListView(List<VisitedPlace> toVisitAccommodations, double width, double height) {
+  Widget toVisitsAccommodationsListView(List<Visitation> toVisitAccommodations, double width, double height) {
     return ListView.builder(
         padding: const EdgeInsets.all(8),
         scrollDirection: Axis.horizontal,
@@ -155,7 +155,7 @@ class _VisitedPlacesPageState extends State<VisitedPlacesPage> {
           );
         });
   }
-  Widget toVisitsRestaurantListView(List<VisitedPlace> toVisitRestaurant, double width, double height) {
+  Widget toVisitsRestaurantListView(List<Visitation> toVisitRestaurant, double width, double height) {
     return ListView.builder(
         padding: const EdgeInsets.all(8),
         scrollDirection: Axis.horizontal,

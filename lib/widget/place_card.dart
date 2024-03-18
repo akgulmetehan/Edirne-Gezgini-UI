@@ -17,15 +17,13 @@ class PlaceCard extends StatelessWidget {
 
   final bool isVisited;
 
-
-  const PlaceCard({
-    super.key,
-    required this.title,
-    required this.image,
-    required this.width,
-    required this.height,
-    required this.isVisited
-  });
+  const PlaceCard(
+      {super.key,
+      required this.title,
+      required this.image,
+      required this.width,
+      required this.height,
+      required this.isVisited});
 
   @override
   Widget build(BuildContext context) {
@@ -58,22 +56,22 @@ class PlaceCard extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-
               isVisited == true
                   ? noteWidget()
-                  : const SizedBox(width: 0,height: 0,)
+                  : const SizedBox(
+                      width: 0,
+                      height: 0,
+                    )
             ],
           ),
-
           const SizedBox(
             height: 20,
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: width*75,
+              SizedBox(
+                width: width * 75,
                 child: Text(
                   title,
                   style: const TextStyle(
@@ -84,7 +82,6 @@ class PlaceCard extends StatelessWidget {
                   maxLines: 3,
                 ),
               ),
-
               favoriteButton(favoritePlaces, favoriteAccommodations, title)
             ],
           ),
@@ -95,29 +92,39 @@ class PlaceCard extends StatelessWidget {
 
   Widget favoriteButton(List<Place> favoritePlaces,
       List<Accommodation> favoriteAccommodations, String currentTitle) {
-
-    bool isFavoritesEmpty = favoritePlaces
-        .where((place) => place.title == currentTitle)
-        .isEmpty &&
-        favoriteAccommodations
-            .where((accommodation) => accommodation.title == currentTitle)
-            .isEmpty;
+    bool isFavoritesEmpty =
+        favoritePlaces.where((place) => place.title == currentTitle).isEmpty &&
+            favoriteAccommodations
+                .where((accommodation) => accommodation.title == currentTitle)
+                .isEmpty;
 
     return isFavoritesEmpty == true
-        ? IconButton(onPressed: () => {/* add this as favorite to dataBase later */}, icon: const Icon(Icons.favorite_border),splashRadius: 0.1,)
-        : IconButton(onPressed: () => {/* add this as favorite to dataBase later */}, icon: const Icon(Icons.favorite), splashRadius: 0.1,);
+        ? IconButton(
+            onPressed: () => {
+              /* add this as favorite to dataBase later */
+            },
+            icon: const Icon(Icons.favorite_border),
+            splashRadius: 0.1,
+          )
+        : IconButton(
+            onPressed: () => {
+              /* add this as favorite to dataBase later */
+            },
+            icon: const Icon(Icons.favorite),
+            splashRadius: 0.1,
+          );
   }
 
-  Widget noteWidget(){
+  Widget noteWidget() {
     return Positioned(
-        top: 0.0,
-        left: 0.0,
-        child: IconButton(
-          icon: const Icon(Icons.note_rounded),
-          color: constants.bottomNavBarColor,
-          iconSize: width*13,
-          onPressed: () {  },
-        ),
-      );
+      top: 0.0,
+      left: 0.0,
+      child: IconButton(
+        icon: const Icon(Icons.note_rounded),
+        color: constants.bottomNavBarColor,
+        iconSize: width * 13,
+        onPressed: () {},
+      ),
+    );
   }
 }

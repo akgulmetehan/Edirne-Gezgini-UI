@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -47,7 +46,7 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
                   },
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
                     'Evet',
                     style: GoogleFonts.ubuntu(
@@ -64,7 +63,7 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
                   },
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
                     'Hayır',
                     style: GoogleFonts.ubuntu(
@@ -76,7 +75,6 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
               ],
             ),
           ),
-
 
           // question 2
           ListTile(
@@ -92,7 +90,7 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
                   },
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
                     'Evet',
                     style: GoogleFonts.ubuntu(
@@ -109,7 +107,7 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
                   },
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
                     'Hayır',
                     style: GoogleFonts.ubuntu(

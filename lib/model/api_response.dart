@@ -1,19 +1,17 @@
-import 'dart:io';
-
 class APIResponse{
-  Object? result;
+  int httpStatus;
 
   String message;
 
-  HttpStatus httpStatus;
+  Object? result;
 
-  APIResponse({required this.result, required this.message, required this.httpStatus});
+  APIResponse({required this.httpStatus, required this.message, this.result});
 
   factory APIResponse.fromJson(Map<String, dynamic> json) {
     return APIResponse(
-      result: json['result'],
+      httpStatus: json['httpStatus'],
       message: json['message'],
-      httpStatus: json['status'],
+      result: json['result'],
     );
   }
 }
