@@ -1,7 +1,7 @@
 import 'package:uuid/uuid.dart';
 
 class UpdateVisitationDto {
-  final Uuid id;
+  final String id;
 
   final String note;
 

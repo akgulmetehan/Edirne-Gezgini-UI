@@ -1,7 +1,7 @@
 import 'package:uuid/uuid.dart';
 
 class RestaurantDto {
-  final Uuid id;
+  final String id;
 
   final String title;
 
@@ -11,5 +11,17 @@ class RestaurantDto {
 
   final String location;
 
-  RestaurantDto({required this.id, required this.title, required this.image, required this.info, required this.location});
+  RestaurantDto(
+      {required this.id,
+      required this.title,
+      required this.image,
+      required this.info,
+      required this.location});
+
+  RestaurantDto.fromMap(Map<String, dynamic> map)
+      : id = map["id"],
+        title = map["title"],
+        image = map["image"],
+        info = map["info"],
+        location = map["location"];
 }

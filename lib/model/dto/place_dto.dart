@@ -3,7 +3,7 @@ import 'package:uuid/uuid.dart';
 import '../enum/place_category.dart';
 
 class PlaceDto {
-  final Uuid id;
+  final String id;
 
   final String title;
 
@@ -15,5 +15,19 @@ class PlaceDto {
 
   final PlaceCategory category;
 
-  PlaceDto({required this.id, required this.title, required this.info, required this.location, required this.image, required this.category});
+  PlaceDto(
+      {required this.id,
+      required this.title,
+      required this.info,
+      required this.location,
+      required this.image,
+      required this.category});
+
+  PlaceDto.fromMap(Map<String, dynamic> map)
+      : id = map["id"],
+        title = map["title"],
+        info = map["info"],
+        location = map["location"],
+        image = map["image"],
+        category = map["category"];
 }

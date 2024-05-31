@@ -1,7 +1,7 @@
 import 'package:uuid/uuid.dart';
 
 class UpdateRestaurantDto {
-  final Uuid id;
+  final String id;
 
   final String title;
 
@@ -11,5 +11,22 @@ class UpdateRestaurantDto {
 
   final String location;
 
-  UpdateRestaurantDto({required this.id, required this.title, required this.image, required this.info, required this.location});
+  UpdateRestaurantDto(
+      {required this.id,
+      required this.title,
+      required this.image,
+      required this.info,
+      required this.location});
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = <String, dynamic>{};
+
+    map["id"] = id;
+    map["title"] = title;
+    map["image"] = image;
+    map["info"] = info;
+    map["location"] = location;
+
+    return map;
+  }
 }

@@ -3,15 +3,27 @@ import 'package:uuid/uuid.dart';
 import '../enum/base_place_category.dart';
 
 class VisitationDto {
-  final Uuid id;
+  final String id;
 
-  final Uuid visitedPlaceId;
+  final String visitedPlaceId;
 
-  final Uuid userId;
+  final String userId;
 
   final BasePlaceCategory category;
 
   final String? note;
 
-  VisitationDto({required this.id, required this.visitedPlaceId, required this.userId, required this.category, this.note});
+  VisitationDto(
+      {required this.id,
+      required this.visitedPlaceId,
+      required this.userId,
+      required this.category,
+      this.note});
+
+  VisitationDto.fromMap(Map<String, dynamic> map)
+      : id = map["id"],
+        visitedPlaceId = map["visitedPlaceId"],
+        userId = map["userId"],
+        category = map["category"],
+        note = map["note"];
 }

@@ -3,7 +3,7 @@ import 'package:uuid/uuid.dart';
 import '../enum/place_category.dart';
 
 class UpdatePlaceDto {
-  final Uuid id;
+  final String id;
 
   final String title;
 
@@ -15,5 +15,24 @@ class UpdatePlaceDto {
 
   final PlaceCategory category;
 
-  UpdatePlaceDto({required this.id, required this.title, required this.info, required this.location, required this.image, required this.category});
+  UpdatePlaceDto(
+      {required this.id,
+      required this.title,
+      required this.info,
+      required this.location,
+      required this.image,
+      required this.category});
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = <String, dynamic>{};
+
+    map["id"] = id;
+    map["title"] = title;
+    map["info"] = info;
+    map["location"] = location;
+    map["image"] = image;
+    map["category"] = PlaceCategoryExtension.categoryToJson(category);
+
+    return map;
+  }
 }

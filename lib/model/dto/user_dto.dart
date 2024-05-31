@@ -3,7 +3,7 @@ import 'package:uuid/uuid.dart';
 import '../enum/role.dart';
 
 class UserDto {
-  final Uuid id;
+  final String id;
 
   final String name;
 
@@ -15,5 +15,21 @@ class UserDto {
 
   final Role role;
 
-  UserDto({required this.id, required this.name, required this.lastName, required this.email, required this.phoneNumber, required this.role});
+  UserDto(
+      {required this.id,
+      required this.name,
+      required this.lastName,
+      required this.email,
+      required this.phoneNumber,
+      required this.role});
+
+  factory UserDto.fromMap(Map<String, dynamic> map) {
+    return UserDto(
+        id: map["id"],
+        name: map["name"],
+        lastName: map["lastName"],
+        email: map["email"],
+        phoneNumber: map["phoneNumber"],
+        role: RoleExtension.fromString(map["role"]));
+  }
 }

@@ -29,7 +29,7 @@ class RegistrationRequestDto {
     map["email"] = email;
     map["password"] = password;
     map["phoneNumber"] = phoneNumber;
-    map["role"] = role;
+    map["role"] = RoleExtension.roleToJson(role);
 
     return map;
   }
