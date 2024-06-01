@@ -1,5 +1,3 @@
-import 'package:uuid/uuid.dart';
-
 import '../enum/base_place_category.dart';
 
 class FavoriteDto {
@@ -32,5 +30,5 @@ class FavoriteDto {
       : id = map["id"],
         favoritePlaceId = map["favoritePlaceId"],
         userId = map["userId"],
-        category = map["category"];
+        category = BasePlaceCategoryExtension.categoryFromString(map["category"]);
 }

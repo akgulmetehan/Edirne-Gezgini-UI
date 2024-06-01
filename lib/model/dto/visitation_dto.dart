@@ -1,5 +1,3 @@
-import 'package:uuid/uuid.dart';
-
 import '../enum/base_place_category.dart';
 
 class VisitationDto {
@@ -24,6 +22,6 @@ class VisitationDto {
       : id = map["id"],
         visitedPlaceId = map["visitedPlaceId"],
         userId = map["userId"],
-        category = map["category"],
+        category = BasePlaceCategoryExtension.categoryFromString(map["category"]),
         note = map["note"];
 }

@@ -1,5 +1,3 @@
-import 'package:uuid/uuid.dart';
-
 import '../enum/place_category.dart';
 
 class PlaceDto {
@@ -29,5 +27,5 @@ class PlaceDto {
         info = map["info"],
         location = map["location"],
         image = map["image"],
-        category = map["category"];
+        category = PlaceCategoryExtension.categoryFromString(map["category"]);
 }
