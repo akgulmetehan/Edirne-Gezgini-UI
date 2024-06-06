@@ -6,7 +6,6 @@ import 'package:edirne_gezgini_ui/model/dto/create_place_dto.dart';
 import 'package:edirne_gezgini_ui/model/dto/update_place_dto.dart';
 import 'package:edirne_gezgini_ui/util/http_request/client_entity.dart';
 import 'package:edirne_gezgini_ui/util/http_request/rest_client.dart';
-import 'package:edirne_gezgini_ui/util/jwt_token.dart';
 import 'package:get_it/get_it.dart';
 
 class PlaceRepository {
@@ -16,7 +15,6 @@ class PlaceRepository {
 
   Future<APIResponse> getPlace(String id) async {
     final String url = "$placeApiUrl/getPlace/$id";
-    //final token = getIt<JwtToken>().getToken();
 
     if(token == null){
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
@@ -29,7 +27,6 @@ class PlaceRepository {
 
   Future<APIResponse> getAll() async{
     final String url = "$placeApiUrl/getAll";
-    //final token = getIt<JwtToken>().getToken();
 
     if(token == null){
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
@@ -41,7 +38,6 @@ class PlaceRepository {
 
   Future<APIResponse> createPlace(CreatePlaceDto dto) async{
     final String url = "$placeApiUrl/createPlace";
-    //final token = getIt<JwtToken>().getToken();
 
     if(token == null){
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
@@ -55,7 +51,6 @@ class PlaceRepository {
 
   Future<APIResponse> updatePlace(UpdatePlaceDto dto) async{
     final String url = "$placeApiUrl/updatePlace";
-    //final token = getIt<JwtToken>().getToken();
 
     if(token == null){
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
@@ -69,7 +64,6 @@ class PlaceRepository {
 
   Future<APIResponse> deletePlace(String id) async{
     final String url = "$placeApiUrl/deletePlace/$id";
-    //final token = getIt<JwtToken>().getToken();
 
     if(token == null){
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");

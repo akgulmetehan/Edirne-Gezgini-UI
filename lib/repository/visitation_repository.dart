@@ -10,14 +10,10 @@ import '../util/http_request/rest_client.dart';
 
 class VisitationRepository {
   final String visitationApiUrl = constants.visitationApiUrl;
-  final String token =
-      "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI2ZGIwYzhhMi1iYjM5LTQzMjgtYmUxMC02ZTZmZTgyM2FkMzQiLCJpYXQiOjE3MTY5MDk0NjQsImV4cCI6MTcxNzE5NzQ2NH0.-GyFtV_nEpf8bQzSQgzWl4MQ_--3UYCKbo1OwlBE4wA";
-
-  //final GetIt _getIt = GetIt.instance;
+  final String token = "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI2ZGIwYzhhMi1iYjM5LTQzMjgtYmUxMC02ZTZmZTgyM2FkMzQiLCJpYXQiOjE3MTcyMzc0OTEsImV4cCI6MTcxNzUyNTQ5MX0.Rvli1ImryWE7qEl3x4IE1InyaH9DcszX8KgQiNTTfS8";
 
   Future<APIResponse> getVisitation(String id) async {
     final url = "$visitationApiUrl/getVisitation/$id";
-    //final token = _getIt<JwtToken>().getToken();
 
     if (token == null) {
       return APIResponse(
@@ -33,7 +29,6 @@ class VisitationRepository {
     final String categoryToString =
         BasePlaceCategoryExtension.categoryToJson(category);
     final url = "$visitationApiUrl/getAllByCategory?category=$categoryToString";
-    //final token = _getIt<JwtToken>().getToken();
 
     if (token == null) {
       return APIResponse(
@@ -49,7 +44,6 @@ class VisitationRepository {
       CreateVisitationDto createVisitationDto) async {
     final url = "$visitationApiUrl/createVisitation";
     final body = createVisitationDto.toMap();
-    //final token = _getIt<JwtToken>().getToken();
 
     if (token == null) {
       return APIResponse(
@@ -64,7 +58,6 @@ class VisitationRepository {
 
   Future<APIResponse> deleteVisitation(String id) async {
     final url = "$visitationApiUrl/deleteVisitation/$id";
-    //final token = _getIt<JwtToken>().getToken();
 
     if (token == null) {
       return APIResponse(
@@ -78,7 +71,6 @@ class VisitationRepository {
 
   Future<APIResponse> getAll() async {
     final url = "$visitationApiUrl/getAll";
-    //final token = _getIt<JwtToken>().getToken();
 
     if (token == null) {
       return APIResponse(

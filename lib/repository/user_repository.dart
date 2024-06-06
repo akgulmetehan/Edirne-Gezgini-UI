@@ -10,9 +10,7 @@ import 'package:edirne_gezgini_ui/constants.dart' as constants;
 
 class UserRepository {
   final String _userApiBaseUrl = constants.userApiUrl;
-  //final GetIt _getIt = GetIt.instance;
-  final String token = "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI2ZGIwYzhhMi1iYjM5LTQzMjgtYmUxMC02ZTZmZTgyM2FkMzQiLCJpYXQiOjE3MTY5MDk0NjQsImV4cCI6MTcxNzE5NzQ2NH0.-GyFtV_nEpf8bQzSQgzWl4MQ_--3UYCKbo1OwlBE4wA";
-
+  final String token = "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI2ZGIwYzhhMi1iYjM5LTQzMjgtYmUxMC02ZTZmZTgyM2FkMzQiLCJpYXQiOjE3MTcyMzc0OTEsImV4cCI6MTcxNzUyNTQ5MX0.Rvli1ImryWE7qEl3x4IE1InyaH9DcszX8KgQiNTTfS8";
 
   Future<APIResponse> getAuthenticatedUser() async {
     final url = "$_userApiBaseUrl/getAuthenticatedUser";
@@ -51,7 +49,6 @@ class UserRepository {
 
   Future<APIResponse> getUserByEmail(String email) async {
     final url = "$_userApiBaseUrl/getUserByEmail/$email";
-    //final token = _getIt<JwtToken>().getToken();
 
    // if(token == null) {
      // return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
@@ -63,7 +60,6 @@ class UserRepository {
 
   Future<APIResponse> getAllUsers() async {
     final url = "$_userApiBaseUrl/getAll";
-    //final token = _getIt<JwtToken>().getToken();
 
     if(token == null) {
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
@@ -76,7 +72,6 @@ class UserRepository {
   Future<APIResponse> updateUser(UpdateUserDto updateUserDto) async {
     final url = "$_userApiBaseUrl/updateUser";
     final body = updateUserDto.toMap();
-    //final token = _getIt<JwtToken>().getToken();
 
     if(token == null) {
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");

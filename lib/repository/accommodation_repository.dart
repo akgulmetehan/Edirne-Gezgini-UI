@@ -4,8 +4,6 @@ import 'package:edirne_gezgini_ui/constants.dart' as constants;
 import 'package:edirne_gezgini_ui/model/api_response.dart';
 import 'package:edirne_gezgini_ui/util/http_request/client_entity.dart';
 import 'package:edirne_gezgini_ui/util/http_request/rest_client.dart';
-import 'package:edirne_gezgini_ui/util/jwt_token.dart';
-import 'package:get_it/get_it.dart';
 
 import '../model/dto/create_accommodation_dto.dart';
 import '../model/dto/update_accommodation_dto.dart';

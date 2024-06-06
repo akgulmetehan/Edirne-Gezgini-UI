@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:edirne_gezgini_ui/model/dto/change_password_dto.dart';
-import 'package:edirne_gezgini_ui/model/dto/user_details_dto.dart';
 import 'package:edirne_gezgini_ui/repository/user_repository.dart';
 
 import '../model/dto/update_user_dto.dart';
@@ -13,16 +12,16 @@ class UserService {
 
   UserService({required this.userRepository});
 
-  Future<Response<UserDetailsDto>> getAuthenticatedUser() async {
+  Future<Response<UserDto>> getAuthenticatedUser() async {
     final response = await userRepository.getAuthenticatedUser();
 
     if (response.httpStatus != HttpStatus.ok) {
       return Response(response.message);
     }
 
-    UserDetailsDto authenticatedUser =
-        UserDetailsDto.fromMap(response.result as Map<String, dynamic>);
-    return Response<UserDetailsDto>("success", result: authenticatedUser);
+    UserDto authenticatedUser =
+        UserDto.fromMap(response.result as Map<String, dynamic>);
+    return Response<UserDto>("success", result: authenticatedUser);
   }
 
   Future<Response<String>> updateAuthenticatedUser(

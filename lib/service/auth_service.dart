@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:edirne_gezgini_ui/model/dto/authentication_request_dto.dart';
 import 'package:edirne_gezgini_ui/model/dto/registration_request_dto.dart';
-import 'package:edirne_gezgini_ui/util/jwt_token.dart';
-import 'package:get_it/get_it.dart';
 
 import '../model/response.dart';
 import '../repository/auth_repository.dart';
@@ -25,10 +23,8 @@ class AuthService {
     return Response<String>("success", result: token);
   }
 
-  Future<Response> login(AuthenticationRequestDto requestDto) async{
+  Future<Response<String>> login(AuthenticationRequestDto requestDto) async{
     final response = await authRepository.login(requestDto);
-    //GetIt getIt = GetIt.instance;
-    //JwtToken jwtToken = getIt<JwtToken>();
 
     if(response.httpStatus != HttpStatus.ok) {
       return Response(response.message);
