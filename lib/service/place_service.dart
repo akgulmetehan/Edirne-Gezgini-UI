@@ -1,8 +1,9 @@
-import 'dart:io';
+ import 'dart:io';
 
 import 'package:edirne_gezgini_ui/model/dto/create_place_dto.dart';
 import 'package:edirne_gezgini_ui/model/dto/place_dto.dart';
 import 'package:edirne_gezgini_ui/model/dto/update_place_dto.dart';
+import 'package:edirne_gezgini_ui/model/enum/place_category.dart';
 
 import '../model/response.dart';
 import '../repository/place_repository.dart';
@@ -27,6 +28,20 @@ class PlaceService {
 
   Future<Response<List<PlaceDto>>> getAll() async {
     final response = await placeRepository.getAll();
+
+    if (response.httpStatus != HttpStatus.ok) {
+      return Response(response.message);
+    }
+
+    List<PlaceDto> placeDtoList = (response.result as List<dynamic>)
+        .map((item) => PlaceDto.fromMap(item as Map<String, dynamic>))
+        .toList();
+
+    return Response<List<PlaceDto>>("success", result: placeDtoList);
+  }
+
+  Future<Response<List<PlaceDto>>> getAllByCategory(PlaceCategory category) async {
+    final response = await placeRepository.getAllByCategory(category);
 
     if (response.httpStatus != HttpStatus.ok) {
       return Response(response.message);

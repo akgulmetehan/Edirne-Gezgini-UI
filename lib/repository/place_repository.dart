@@ -4,6 +4,7 @@ import 'package:edirne_gezgini_ui/constants.dart' as constants;
 import 'package:edirne_gezgini_ui/model/api_response.dart';
 import 'package:edirne_gezgini_ui/model/dto/create_place_dto.dart';
 import 'package:edirne_gezgini_ui/model/dto/update_place_dto.dart';
+import 'package:edirne_gezgini_ui/model/enum/place_category.dart';
 import 'package:edirne_gezgini_ui/util/http_request/client_entity.dart';
 import 'package:edirne_gezgini_ui/util/http_request/rest_client.dart';
 import 'package:get_it/get_it.dart';
@@ -27,6 +28,18 @@ class PlaceRepository {
 
   Future<APIResponse> getAll() async{
     final String url = "$placeApiUrl/getAll";
+
+    if(token == null){
+      return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
+    }
+
+    final ClientEntity clientEntity = ClientEntity.httpGet(url, token);
+    return await RestClient().send(clientEntity);
+  }
+
+  Future<APIResponse> getAllByCategory(PlaceCategory category) async {
+    final String categoryString = PlaceCategoryExtension.categoryToJson(category);
+    final String url = "$placeApiUrl/getPlaceBtCategory?category=$categoryString";
 
     if(token == null){
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
