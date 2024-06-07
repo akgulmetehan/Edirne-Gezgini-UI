@@ -64,4 +64,17 @@ class VisitationService {
         .toList();
     return Response<List<VisitationDto>>("success", result: visitationDtoList);
   }
+
+  Future<Response<List<VisitationDto>>> getAuthenticatedUserVisitations() async{
+    final response = await visitationRepository.getAuthenticatedUserVisitations();
+
+    if (response.httpStatus != HttpStatus.ok) {
+      return Response(response.message);
+    }
+
+    List<VisitationDto> visitationDtoList = (response.result as List<dynamic>)
+        .map((item) => VisitationDto.fromMap(item as Map<String, dynamic>))
+        .toList();
+    return Response<List<VisitationDto>>("success", result: visitationDtoList);
+  }
 }

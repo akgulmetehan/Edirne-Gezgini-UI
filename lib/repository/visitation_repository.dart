@@ -81,4 +81,17 @@ class VisitationRepository {
     final ClientEntity clientEntity = ClientEntity.httpGet(url, token);
     return await RestClient().send(clientEntity);
   }
+
+  Future<APIResponse> getAuthenticatedUserVisitations() async{
+    final url = "$visitationApiUrl/getAuthenticatedUserVisitations";
+
+    if (token == null) {
+      return APIResponse(
+          httpStatus: HttpStatus.internalServerError,
+          message: "error while retrieving token");
+    }
+
+    final ClientEntity clientEntity = ClientEntity.httpGet(url, token);
+    return await RestClient().send(clientEntity);
+  }
 }
