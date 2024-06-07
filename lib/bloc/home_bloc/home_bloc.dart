@@ -8,6 +8,8 @@ import 'package:edirne_gezgini_ui/service/place_service.dart';
 import 'package:edirne_gezgini_ui/service/user_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../model/dto/place_dto.dart';
+
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final PlaceService placeService;
   final UserService userService;
@@ -45,7 +47,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
 
         final historicalList = response.result!;
-        emit(state.copyWith(historicalListStatus: GetHistoricalListSuccess(),historicalList: historicalList));
+        Map<PlaceCategory,List<PlaceDto>?> currentList = state.placeList;
+
+        //group places by category "historical" in map
+        for(PlaceDto place in historicalList) {
+          currentList[category]?.add(place);
+        }
+
+        emit(state.copyWith(historicalListStatus: GetHistoricalListSuccess(), placeList: currentList));
 
       }catch(e) {
         emit(state.copyWith(historicalListStatus: GetHistoricalListFailed(message: "something went wrong..", exception: e)));
@@ -64,7 +73,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
 
         final museumList = response.result!;
-        emit(state.copyWith(museumListStatus: GetMuseumListSuccess(), museumList: museumList));
+        Map<PlaceCategory,List<PlaceDto>?> currentList = state.placeList;
+
+        //group places by category "museum" in map
+        for(PlaceDto place in museumList) {
+          currentList[category]?.add(place);
+        }
+
+        emit(state.copyWith(museumListStatus: GetMuseumListSuccess(), placeList: currentList));
 
       }catch(e) {
         emit(state.copyWith(museumListStatus: GetMuseumListFailed(message: "something went wrong..", exception: e)));
