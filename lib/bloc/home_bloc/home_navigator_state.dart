@@ -1,0 +1,1 @@
+enum HomeNavigatorState {home, hotels, restaurants}
