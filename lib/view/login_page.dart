@@ -1,22 +1,41 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:edirne_gezgini_ui/bloc/login_bloc/login_event.dart';
+import 'package:edirne_gezgini_ui/bloc/login_bloc/login_state.dart';
+import 'package:edirne_gezgini_ui/bloc/login_bloc/login_status.dart';
+import 'package:edirne_gezgini_ui/service/auth_service.dart';
+import 'package:edirne_gezgini_ui/service/user_service.dart';
+import 'package:edirne_gezgini_ui/util/auth_credential_store.dart';
+import 'package:edirne_gezgini_ui/widget/login_email_text_field.dart';
+import 'package:edirne_gezgini_ui/widget/login_password_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:edirne_gezgini_ui/constants.dart' as constants;
 
+import '../bloc/auth_bloc/auth_cubit.dart';
+import '../bloc/login_bloc/login_bloc.dart';
+import '../util/data_util.dart';
+
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final DataUtil dataUtil;
+
+  const LoginPage({super.key, required this.dataUtil});
 
   @override
   State<StatefulWidget> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+    GetIt getIt = GetIt.instance;
+    final authStore = getIt<AuthCredentialStore>();
     double width = MediaQuery.of(context).size.width / 100;
     double height = MediaQuery.of(context).size.height / 100;
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: const Color.fromRGBO(240, 240, 240, 1),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -28,59 +47,78 @@ class _LoginPageState extends State<LoginPage> {
           )),
           scrolledUnderElevation: 0.0,
         ),
-        body: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const SizedBox(
-              height: 30,
-            ),
-            Center(
-              child: Container(
-                alignment: Alignment.center,
-                width: width / 2.5,
-                height: height / 15,
-                child: Text(
-                  "GİRİŞ YAP",
-                  style: GoogleFonts.asap(
-                      color: const Color.fromRGBO(126, 124, 255, 0.7),
-                      fontWeight: FontWeight.bold,
-                      fontSize: width * 0.045),
+        body: BlocProvider<LoginBloc>(
+          create: (context) =>LoginBloc(
+              authService: context.read<AuthService>(),
+              authStore: authStore,
+              userService: context.read<UserService>(),
+              authCubit: context.read<AuthCubit>()),
+
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const SizedBox(
+                height: 30,
+              ),
+              Center(
+                child: Container(
+                  alignment: Alignment.center,
+                  width: width / 2.5,
+                  height: height / 15,
+                  child: Text(
+                    "GİRİŞ YAP",
+                    style: GoogleFonts.asap(
+                        color: const Color.fromRGBO(126, 124, 255, 0.7),
+                        fontWeight: FontWeight.bold,
+                        fontSize: width * 0.045),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            formField(),
-            //FORM FIELD
-            SizedBox(
-              height: height / 40,
-            ),
-            Center(
-              child: buildSubmitButton(),
-            ),
-            Expanded(
-              child: buildBottomPart(context, width),
-            ),
-          ]),
+              const SizedBox(
+                height: 10,
+              ),
+              //FORM FIELD
+              formField(dataUtil: widget.dataUtil, context: context),
+              SizedBox(
+                height: height / 40,
+              ),
+              Center(
+                child: buildSubmitButton(),
+              ),
+              Expanded(
+                child: buildBottomPart(context, width),
+              ),
+            ]),
+          ),
         ),
-      ),
-    );
+      );
   }
 
-  Widget formField() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: emailField(),
+  Widget formField(
+      {required DataUtil dataUtil, required BuildContext context}) {
+    return BlocListener<LoginBloc, LoginState>(
+      listener: (context, state) {
+        final loginStatus = state.loginStatus;
+
+        if (loginStatus is LoginFailed) {
+          dataUtil.showMessage(message: loginStatus.message, context: context);
+        }
+      },
+      child: Form(
+        key: formKey,
+        child: const Column(
+          children: [
+            Padding(
+                padding: EdgeInsets.only(bottom: 5),
+                child: LoginEmailTextField()),
+            Padding(
+              padding: EdgeInsets.only(bottom: 5),
+              child: LoginPasswordTextField(),
+            )
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: passwordField(),
-        ),
-      ],
+      ),
     );
   }
 
@@ -118,74 +156,27 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget buildSubmitButton() {
-    return TextButton(
-      onPressed: () {},
-      style: ButtonStyle(
-          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-              const EdgeInsets.only(left: 30, right: 30)),
-          backgroundColor: MaterialStateProperty.all(Colors.white70),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-            side: BorderSide.none,
-          ))),
-      child: Text(
-        "Giriş yap",
-        style: TextStyle(color: constants.primaryTextColor.withOpacity(0.6)),
-      ),
-    );
-  }
-
-  Widget emailField() {
-    return TextFormField(
-        cursorColor: Colors.blueAccent,
-        style: const TextStyle(
-          color: Colors.black54,
-        ),
-        maxLines: 1,
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(
-            Icons.email,
-            color: Colors.cyan,
+    return BlocBuilder<LoginBloc, LoginState>(
+      builder: (context, state) {
+        return TextButton(
+          onPressed: () {
+            context.read<LoginBloc>().add(LoginSubmitted());
+          },
+          style: ButtonStyle(
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                  const EdgeInsets.only(left: 30, right: 30)),
+              backgroundColor: WidgetStateProperty.all(Colors.white70),
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    side: BorderSide.none,
+                  ))),
+          child: Text(
+            "Giriş yap",
+            style: TextStyle(color: constants.primaryTextColor.withOpacity(0.6)),
           ),
-          errorStyle: const TextStyle(fontSize: 9),
-          hintText: "Email",
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-          filled: true,
-          fillColor: Colors.white.withOpacity(0.80),
-          border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(8)),
-          isDense: true,
-        ));
-  }
-
-  Widget passwordField() {
-    return TextFormField(
-      cursorColor: Colors.blueAccent,
-      style: const TextStyle(
-        color: Colors.black54,
-      ),
-      maxLines: 1,
-      obscureText: true,
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-          prefixIcon: const Icon(
-            Icons.password,
-            color: Colors.cyan,
-          ),
-          errorStyle: const TextStyle(fontSize: 9),
-          hintText: "Şifre",
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-          filled: true,
-          fillColor: Colors.white.withOpacity(0.80),
-          border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(8)),
-          isDense: true),
+        );
+      }
     );
   }
 }

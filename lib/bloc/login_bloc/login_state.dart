@@ -14,7 +14,7 @@ class LoginState {
       {String? email, String? password, LoginStatus? loginStatus}) {
     return LoginState(
         email: email ?? this.email,
-        password: password ?? this.email,
+        password: password ?? this.password,
         loginStatus: loginStatus ?? this.loginStatus);
   }
 }

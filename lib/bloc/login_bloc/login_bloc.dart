@@ -1,3 +1,4 @@
+import 'package:edirne_gezgini_ui/bloc/auth_bloc/auth_cubit.dart';
 import 'package:edirne_gezgini_ui/bloc/login_bloc/login_event.dart';
 import 'package:edirne_gezgini_ui/bloc/login_bloc/login_state.dart';
 import 'package:edirne_gezgini_ui/bloc/login_bloc/login_status.dart';
@@ -12,9 +13,10 @@ import '../../util/auth_credential_store.dart';
 class LoginBloc extends Bloc<LoginEvent,LoginState> {
   final AuthService authService;
   final UserService userService;
+  final AuthCubit authCubit;
   final AuthCredentialStore authStore;
 
-  LoginBloc({required this.authService, required this.authStore, required this.userService})
+  LoginBloc({required this.authService, required this.authStore, required this.userService, required this.authCubit})
       : super(LoginState()) {
     {
       on<LoginEmailChanged>((event, emit) {
@@ -39,6 +41,7 @@ class LoginBloc extends Bloc<LoginEvent,LoginState> {
 
           if(loginMessage != "success") {
             emit(state.copyWith(loginStatus: LoginFailed(message: loginMessage)));
+            return;
           }
 
           //get current user
@@ -58,6 +61,7 @@ class LoginBloc extends Bloc<LoginEvent,LoginState> {
           authStore.currentUser = currentUser;
 
           emit(state.copyWith(loginStatus: LoginSuccess()));
+          authCubit.showHomePage();
 
         } catch (e) {
           emit(state.copyWith(loginStatus: LoginFailed(message: "something went wrong..", exception: e)));
