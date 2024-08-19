@@ -24,7 +24,8 @@ class HotelsBloc extends Bloc<HotelsEvent,HotelsState> {
 
         List<AccommodationDto> hotelList = response.result!;
 
-        emit(state.copyWith(hotelListStatus: GetHotelListSuccess(), hotelList: hotelList));
+        emit(state.copyWith(hotelListStatus: GetHotelListSuccess()));
+        emit(state.copyWith(hotelList: hotelList));
 
       }catch(e) {
         emit(state.copyWith(hotelListStatus: GetHotelListFailed(message: "something went wrong..", exception: e)));

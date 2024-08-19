@@ -20,33 +20,19 @@ class DependencyInjector {
   static final GetIt _getIt = GetIt.instance;
 
   static void setupDependencies() {
+    _getIt.registerSingleton(AuthCredentialStore);
     _registerUtils();
     _registerServices();
     _registerRepositories();
   }
 
   static void _registerServices() {
-    _getIt.registerSingleton(AccommodationService(accommodationRepository: AccommodationRepository()));
-    _getIt.registerSingleton(AuthService(authRepository: AuthRepository()));
-    _getIt.registerSingleton(FavoriteService(favoriteRepository: FavoriteRepository()));
-    _getIt.registerSingleton(PlaceService(placeRepository: PlaceRepository()));
-    _getIt.registerSingleton(RestaurantService(restaurantRepository: RestaurantRepository()));
-    _getIt.registerSingleton(UserService(userRepository: UserRepository()));
-    _getIt.registerSingleton(VisitationService(visitationRepository: VisitationRepository()));
+
   }
 
   static void _registerRepositories() {
-    _getIt.registerSingleton(AccommodationRepository);
-    _getIt.registerSingleton(AuthRepository);
-    _getIt.registerSingleton(FavoriteRepository);
-    _getIt.registerSingleton(PlaceRepository);
-    _getIt.registerSingleton(RestaurantRepository);
-    _getIt.registerSingleton(UserRepository);
-    _getIt.registerSingleton(VisitationRepository);
   }
 
   static void _registerUtils() {
-    _getIt.registerSingleton(ClientEntity);
-    _getIt.registerSingleton(AuthCredentialStore);
   }
 }

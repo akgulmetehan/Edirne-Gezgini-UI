@@ -18,6 +18,7 @@ class _GetRoutePageState extends State<GetRoutePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          automaticallyImplyLeading: false,
           centerTitle: true,
           backgroundColor: Colors.white,
           scrolledUnderElevation: 0.0,

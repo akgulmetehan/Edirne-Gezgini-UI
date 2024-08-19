@@ -21,7 +21,7 @@ class FavoriteDto {
     map["id"] = id;
     map["favoritePlaceId"] = favoritePlaceId;
     map["userId"] = userId;
-    map["category"] = category;
+    map["category"] = BasePlaceCategoryExtension.categoryToJson(category);
 
     return map;
   }

@@ -7,11 +7,13 @@ import '../model/place.dart';
 
 
 class PlaceDetailsPage extends StatefulWidget {
-  final BasePlace place;
+  final String title;
+  final String info;
+  final String location;
+  final String? image;
 
-  final BasePlaceCategory category;
 
-  const PlaceDetailsPage({super.key, required this.place, required this.category});
+  const PlaceDetailsPage({super.key, required this.title, required this.info, required this.location, this.image});
 
   @override
   State<StatefulWidget> createState() => _PlaceDetailsPageState();
@@ -20,25 +22,6 @@ class PlaceDetailsPage extends StatefulWidget {
 class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
   @override
   Widget build(BuildContext context) {
-    late String title;
-    late String? info;
-    late String location;
-    late String image;
-
-    if(widget.category == BasePlaceCategory.place){
-      Place currentPlace = widget.place as Place;
-      title = currentPlace.title;
-      info = currentPlace.info;
-      location = currentPlace.location;
-      image = currentPlace.image;
-    } else{
-      Accommodation currentAccommodation = widget.place as Accommodation;
-      title = currentAccommodation.title;
-      info = currentAccommodation.info;
-      location = currentAccommodation.location;
-      image = currentAccommodation.image;
-    }
-
     double width = MediaQuery
         .of(context)
         .size
@@ -49,10 +32,11 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
         .height / 100;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
           centerTitle: true,
           title: Text(
-            title,
+            widget.title,
             style: const TextStyle(fontWeight: FontWeight.bold),
           )),
       body: Padding(
@@ -63,7 +47,7 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.asset(
-                image,
+                widget.image!,
                 height: height * 30,
                 width: width * 100,
                 fit: BoxFit.cover,
@@ -73,7 +57,7 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
             const SizedBox(height: 20,),
 
             AutoSizeText(
-              info!,
+              widget.info,
               style: const TextStyle(fontSize: 15, color: Colors.black87),
               maxLines: 10,
             ),
@@ -89,7 +73,7 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
             ),
 
             AutoSizeText(
-              location,
+              widget.location,
               style: const TextStyle(fontSize: 15, color: Colors.black87),
             )
           ],

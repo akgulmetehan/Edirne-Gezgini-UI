@@ -37,45 +37,71 @@ class EdirneGezgini extends StatelessWidget {
     final authStore = getIt<AuthCredentialStore>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
       home: MultiRepositoryProvider(
           providers: [
-            RepositoryProvider(create: (context) => AccommodationService(accommodationRepository: AccommodationRepository())),
-            RepositoryProvider(create: (context) => AuthService(authRepository: AuthRepository())),
-            RepositoryProvider(create: (context) => FavoriteService(favoriteRepository: FavoriteRepository())),
-            RepositoryProvider(create: (context) => PlaceService(placeRepository: PlaceRepository())),
-            RepositoryProvider(create: (context) => RestaurantService(restaurantRepository: RestaurantRepository())),
-            RepositoryProvider(create: (context) => UserService(userRepository: UserRepository())),
-            RepositoryProvider(create: (context) => VisitationService(visitationRepository: VisitationRepository())),
+            RepositoryProvider(
+                create: (context) => AccommodationService(
+                    accommodationRepository: AccommodationRepository())),
+            RepositoryProvider(
+                create: (context) =>
+                    AuthService(authRepository: AuthRepository())),
+            RepositoryProvider(
+                create: (context) =>
+                    FavoriteService(favoriteRepository: FavoriteRepository())),
+            RepositoryProvider(
+                create: (context) =>
+                    PlaceService(placeRepository: PlaceRepository())),
+            RepositoryProvider(
+                create: (context) => RestaurantService(
+                    restaurantRepository: RestaurantRepository())),
+            RepositoryProvider(
+                create: (context) =>
+                    UserService(userRepository: UserRepository())),
+            RepositoryProvider(
+                create: (context) => VisitationService(
+                    visitationRepository: VisitationRepository())),
           ],
-
-          child: MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                    create: (context) => SessionCubit()),
-                BlocProvider(
-                    create: (context) => HomeNavigatorCubit()),
-                BlocProvider(
-                    create: (context) => AuthCubit(sessionCubit: context.read<SessionCubit>())),
-                BlocProvider(
-                    create: (context) => LoginBloc(authService: context.read<AuthService>(), authStore: authStore, userService: context.read<UserService>(), authCubit: context.read<AuthCubit>())),
-                BlocProvider(
-                    create: (context) => RegisterBloc(authService: context.read<AuthService>())),
-                BlocProvider(
-                    create: (context) => HomeBloc(placeService: context.read<PlaceService>(), userService: context.read<UserService>())),
-                BlocProvider(
-                    create: (context) => RestaurantsBloc(restaurantService: context.read<RestaurantService>())),
-                BlocProvider(
-                    create: (context) => VisitationsBloc(visitationService: context.read<VisitationService>(), authStore: authStore)),
-                BlocProvider(
-                    create: (context) => HotelsBloc(accommodationService: context.read<AccommodationService>())),
-                BlocProvider(
-                    create: (context) => FavoritesBloc(favoriteService: context.read<FavoriteService>())),
-              ],
-              child: const AppNavigator()
-          )
-      ),
+          child: MultiBlocProvider(providers: [
+            BlocProvider(create: (context) => SessionCubit()),
+            BlocProvider(create: (context) => HomeNavigatorCubit()),
+            BlocProvider(
+                create: (context) =>
+                    AuthCubit(sessionCubit: context.read<SessionCubit>())),
+            BlocProvider(
+                create: (context) => LoginBloc(
+                    authService: context.read<AuthService>(),
+                    authStore: authStore,
+                    userService: context.read<UserService>(),
+                    authCubit: context.read<AuthCubit>())),
+            BlocProvider(
+                create: (context) => RegisterBloc(
+                    authService: context.read<AuthService>(),
+                    authCubit: context.read<AuthCubit>())),
+            BlocProvider(
+                create: (context) => HomeBloc(
+                    placeService: context.read<PlaceService>(),
+                    userService: context.read<UserService>())),
+            BlocProvider(
+                create: (context) => RestaurantsBloc(
+                    restaurantService: context.read<RestaurantService>())),
+            BlocProvider(
+                create: (context) => VisitationsBloc(
+                    visitationService: context.read<VisitationService>(),
+                    authStore: authStore,
+                    accommodationService: context.read<AccommodationService>(),
+                    placeService: context.read<PlaceService>(),
+                    restaurantService: context.read<RestaurantService>())),
+            BlocProvider(
+                create: (context) => HotelsBloc(
+                    accommodationService:
+                        context.read<AccommodationService>())),
+            BlocProvider(
+                create: (context) => FavoritesBloc(
+                    favoriteService: context.read<FavoriteService>(),
+                    accommodationService: context.read<AccommodationService>(),
+                    placeService: context.read<PlaceService>(),
+                    restaurantService: context.read<RestaurantService>())),
+          ], child: const AppNavigator())),
     );
   }
-
 }

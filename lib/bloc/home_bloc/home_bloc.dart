@@ -15,7 +15,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final UserService userService;
 
   HomeBloc({required this.placeService, required this.userService})
-      : super(HomeState()) {
+      : super(HomeState(placeList: {})) {
 
     on<GetCurrentUser>((event,emit) async {
       emit(state.copyWith(currentUserStatus: GetCurrentUserPending()));
@@ -26,6 +26,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         if(response.message != "success") {
           emit(state.copyWith(currentUserStatus: GetCurrentUserFailed(message: response.message)));
+          return;
         }
 
         emit(state.copyWith(currentUserStatus: GetCurrentUserSuccess(), currentUser: currentUser));
@@ -44,17 +45,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         if(response.message != "success") {
           emit(state.copyWith(historicalListStatus: GetHistoricalListFailed(message: response.message)));
+          return;
         }
 
         final historicalList = response.result!;
+        List<PlaceDto> newHistoricalList = [];
         Map<PlaceCategory,List<PlaceDto>?> currentList = state.placeList;
 
         //group places by category "historical" in map
         for(PlaceDto place in historicalList) {
-          currentList[category]?.add(place);
+          if(place.category == category) {
+            newHistoricalList.add(place);
+          }
         }
 
-        emit(state.copyWith(historicalListStatus: GetHistoricalListSuccess(), placeList: currentList));
+        currentList[category] = newHistoricalList;
+
+        emit(state.copyWith(historicalListStatus: GetHistoricalListSuccess()));
+        emit(state.copyWith(placeList: currentList));
 
       }catch(e) {
         emit(state.copyWith(historicalListStatus: GetHistoricalListFailed(message: "something went wrong..", exception: e)));
@@ -70,17 +78,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         if(response.message != "success") {
           emit(state.copyWith(museumListStatus: GetMuseumListFailed(message: response.message)));
+          return;
         }
 
         final museumList = response.result!;
         Map<PlaceCategory,List<PlaceDto>?> currentList = state.placeList;
+        List<PlaceDto> newMuseumList = [];
 
         //group places by category "museum" in map
         for(PlaceDto place in museumList) {
-          currentList[category]?.add(place);
+          if(place.category == category) {
+            newMuseumList.add(place);
+          }
         }
 
-        emit(state.copyWith(museumListStatus: GetMuseumListSuccess(), placeList: currentList));
+        currentList[category] = newMuseumList;
+
+        emit(state.copyWith(museumListStatus: GetMuseumListSuccess()));
+        emit(state.copyWith(placeList: currentList));
 
       }catch(e) {
         emit(state.copyWith(museumListStatus: GetMuseumListFailed(message: "something went wrong..", exception: e)));

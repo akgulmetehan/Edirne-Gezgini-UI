@@ -1,6 +1,4 @@
-import 'package:edirne_gezgini_ui/database/temporary_database.dart';
 import 'package:edirne_gezgini_ui/model/accommodation.dart';
-import 'package:edirne_gezgini_ui/model/enum/base_place_category.dart';
 import 'package:edirne_gezgini_ui/constants.dart' as constants;
 import 'package:flutter/material.dart';
 
@@ -27,18 +25,9 @@ class PlaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Place> favoritePlaces = TemporaryDatabase()
-        .favorites
-        .where((favorite) => favorite.category == BasePlaceCategory.place)
-        .map((favorite) => favorite.favoritePlace as Place)
-        .toList();
+    List<Place> favoritePlaces = [];
 
-    List<Accommodation> favoriteAccommodations = TemporaryDatabase()
-        .favorites
-        .where(
-            (favorite) => favorite.category == BasePlaceCategory.accommodation)
-        .map((favorite) => favorite.favoritePlace as Accommodation)
-        .toList();
+    List<Accommodation> favoriteAccommodations = [];
     return SizedBox(
       width: width * 100,
       height: height * 60,

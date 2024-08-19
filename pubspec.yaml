@@ -67,27 +67,31 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - images/profil.jpg
-   - images/külliye.jpg
+   - images/kulliye.jpg
    - images/selimiye.jpg
-   - images/tren garı.jpg
+   - images/tren gari.jpg
    - images/caption.jpg
-   - images/külliye1.jpg
-   - images/lozan-anıtı.jpg
+   - images/kulliye1.jpg
+   - images/lozan-aniti.jpg
    - images/meric.jpg
-   - images/üçşerefelicamii.jpg
-   - images/balkansavaşları.jpg
+   - images/ucserefelicamii.jpg
+   - images/balkansavaslari.jpg
    - images/edirne-kent-muzesi.jpg
    - images/etnografya.jpg
    - images/fsm.jpg
    - images/islam.jpg
-   - images/selimiyevakıf.jpeg
+   - images/selimiyevakif.jpeg
    - images/edirne.jpg
    - images/hilly-hotel.jpg
    - images/ND-Suit-Hotel.jpg
-   - images/aydın.jpg
+   - images/aydin.jpg
    - images/osman.jpg
-   - images/kırkpınar.jpg
-   - images/niyazi.jpg
+   - images/kirkpinar.jpg
+   - images/fidanoglu.jpg
+   - images/marisstone.jpg
+   - images/nyz.jpg
+   - images/edirne-gezgini-logo.png
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

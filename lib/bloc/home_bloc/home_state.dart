@@ -11,14 +11,14 @@ class HomeState {
   final MuseumListStatus museumListStatus;
   final HistoricalListStatus historicalListStatus;
   final CurrentUserStatus currentUserStatus;
-  final Map<PlaceCategory, List<PlaceDto>?> placeList;
+  Map<PlaceCategory, List<PlaceDto>?> placeList;
 
   HomeState(
       {this.currentUser,
       this.museumListStatus = const InitialMuseumListStatus(),
       this.historicalListStatus = const InitialHistoricalListStatus(),
       this.currentUserStatus = const InitialCurrentUserStatus(),
-      this.placeList = const {}});
+      required this.placeList});
 
   HomeState copyWith(
       {UserDto? currentUser,

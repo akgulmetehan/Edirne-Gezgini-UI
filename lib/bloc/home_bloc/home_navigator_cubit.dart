@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeNavigatorCubit extends Cubit<HomeNavigatorState> {
   static final HomeNavigatorCubit _singleton = HomeNavigatorCubit._internal();
+  int tapCount1 = 0;
+  int tapCount2 = 0;
 
   factory HomeNavigatorCubit(){
     return _singleton;

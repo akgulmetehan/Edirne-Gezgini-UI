@@ -18,7 +18,7 @@ class AuthNavigator extends StatelessWidget {
               MaterialPage(child: LoginPage(dataUtil: DataUtil(),)),
 
               if(state == AuthState.signup)
-                const MaterialPage(child: RegisterPage())
+                MaterialPage(child: RegisterPage(dataUtil: DataUtil(),))
             ],
 
             onPopPage: (route, result) {

@@ -1,13 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:edirne_gezgini_ui/database/temporary_database.dart';
-import 'package:edirne_gezgini_ui/model/accommodation.dart';
-import 'package:edirne_gezgini_ui/model/enum/base_place_category.dart';
+import 'package:edirne_gezgini_ui/bloc/favorites_bloc/favorites_event.dart';
+import 'package:edirne_gezgini_ui/bloc/favorites_bloc/favorites_state.dart';
+import 'package:edirne_gezgini_ui/bloc/favorites_bloc/favorites_status.dart';
 import 'package:edirne_gezgini_ui/widget/place_card.dart';
 import 'package:flutter/material.dart';
 import 'package:edirne_gezgini_ui/constants.dart' as constants;
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../model/favorite.dart';
-import '../model/place.dart';
+import '../bloc/favorites_bloc/favorites_bloc.dart';
+import '../model/enum/base_place_category.dart';
+
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -17,14 +19,14 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  List<Favorite> favoritePlaces = TemporaryDatabase()
-      .favorites
-      .where((favorite) => favorite.category == BasePlaceCategory.place)
-      .toList();
-  List<Favorite> favoriteAccommodations = TemporaryDatabase()
-      .favorites
-      .where((favorite) => favorite.category == BasePlaceCategory.accommodation)
-      .toList();
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<FavoritesBloc>().add(GetFavoriteList());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,104 +35,111 @@ class _FavoritePageState extends State<FavoritePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+          automaticallyImplyLeading: false,
           centerTitle: true,
           backgroundColor: Colors.white,
           scrolledUnderElevation: 0.0,
           title: const Text(
-            "favorilerim",
+            "Favorilerim",
             style: TextStyle(fontWeight: FontWeight.bold),
           )),
-      body: ListView(
-        scrollDirection: Axis.vertical,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8),
-            child: AutoSizeText(
-              "Favori mekanlarım",
-              style: TextStyle(
-                  fontSize: 24,
-                  color: constants.primaryTextColor,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          const SizedBox(
-            height: 16,
-          ),
-          //list places
-          SizedBox(
-            width: width * 100,
-            height: height * 65,
-            child: favoritePlacesListView(favoritePlaces, width*0.5, height*1),
-          ),
-
-          const Padding(
-            padding: EdgeInsets.all(8),
-            child: AutoSizeText(
-              "Favori konaklama yerlerim",
-              style: TextStyle(
-                  fontSize: 24,
-                  color: constants.primaryTextColor,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
-          //list accommodations
-          SizedBox(
-            width: width * 100,
-            height: height * 65,
-            child: favoriteAccommodationsListView(favoriteAccommodations, width*0.5, height*1),
-          ),
-        ],
+      body: BlocBuilder<FavoritesBloc, FavoritesState>(
+        builder: (context,state) {
+          if(state.favoritesStatus is GetFavoriteListPending || state.favoritesStatus is InitialFavoritesStatus) {
+            return const Center(child: CircularProgressIndicator());
+          } else if(state.favoritesStatus is GetFavoriteListSuccess) {
+            return ListView(
+              scrollDirection: Axis.vertical,
+              children: [
+                buildSectionTitle("Favori Mekanlarım"),
+                const SizedBox(height: 16),
+                SizedBox(width: width*100, height: height*65,child: buildFavoriteListView(state, BasePlaceCategory.place, width*0.5, height*1),),
+                buildSectionTitle("Favori Konaklama Yerlerim"),
+                const SizedBox(height: 16),
+                SizedBox(width: width*100, height: height*65, child: buildFavoriteListView(state, BasePlaceCategory.accommodation, width*0.5, height*1)),
+                const SizedBox(height: 16),
+                buildSectionTitle("Favori Restaurantlarım"),
+                SizedBox(width: width*100, height: height*65, child: buildFavoriteListView(state, BasePlaceCategory.restaurant, width*0.5, height*1))
+              ],
+            );
+          } else {
+            return Center(child: Text((state.favoritesStatus as GetFavoriteListFailed).message));
+          }
+        }
       ),
     );
   }
 
-  Widget favoritePlacesListView(List<Favorite> favoritePlaces, double width, double height) {
-    return ListView.builder(
-        padding: const EdgeInsets.all(8),
-        scrollDirection: Axis.horizontal,
-        itemCount: favoritePlaces.length,
-        itemBuilder: (BuildContext context, int index) {
-
-          Place currentPlace = favoritePlaces[index].favoritePlace as Place;
-
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child:
-                PlaceCard(
-                    title: currentPlace.title,
-                    image: currentPlace.image,
-                    width: width,
-                    height: height,
-                    isVisited: false,
-                ),
-          );
-        });
+  Widget buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: AutoSizeText(
+        title,
+        style: const TextStyle(
+          fontSize: 24,
+          color: constants.primaryTextColor,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
   }
 
-  Widget favoriteAccommodationsListView(List<Favorite> favoriteAccommodations, double width, double height) {
-    return ListView.builder(
-        padding: const EdgeInsets.all(8),
-        scrollDirection: Axis.horizontal,
-        itemCount: favoriteAccommodations.length,
-        itemBuilder: (BuildContext context, int index) {
+  Widget buildFavoriteListView(FavoritesState state, BasePlaceCategory category, double width, double height) {
+    final favorites = state.favoriteList[category];
+    int? length = favorites?.length;
+    if (favorites == null || favorites.isEmpty) {
+      return const Center(child: Text("favorilediğin bir yer yok."));
+    }
 
-          Accommodation currentAccommodation =
-              favoriteAccommodations[index].favoritePlace as Accommodation;
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: length,
+        itemBuilder: (context, index) {
+          var visitation = favorites[index]!;
+          var visitedPlaceId = visitation.favoritePlaceId;
+          String title = "";
+          String? image = "";
+
+          switch(category) {
+            case BasePlaceCategory.accommodation:
+              if(state.accommodationList.isEmpty){
+                break;
+              }
+              final accommodation = state.accommodationList[visitedPlaceId]!;
+              title = accommodation.title;
+              image = accommodation.image;
+
+            case BasePlaceCategory.restaurant:
+              if(state.restaurantList.isEmpty) {
+                break;
+              }
+              final restaurant = state.restaurantList[visitedPlaceId]!;
+              title = restaurant.title;
+              image = restaurant.image;
+
+            case BasePlaceCategory.place:
+              if(state.placeList.isEmpty) {
+                break;
+              }
+              final place = state.placeList[visitedPlaceId]!;
+              title = place.title;
+              image = place.image;
+          }
 
           return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: PlaceCard(
-                title: currentAccommodation.title,
-                image: currentAccommodation.image,
+              padding: const EdgeInsets.all(8.0),
+              child: PlaceCard(
+                title: title,
+                image: image!,
                 width: width,
                 height: height,
                 isVisited: false,
-            ),
+              )
           );
-        });
+        },
+      ),
+    );
   }
 }

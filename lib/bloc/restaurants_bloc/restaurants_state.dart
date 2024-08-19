@@ -4,12 +4,12 @@ import '../../model/dto/restaurant_dto.dart';
 
 class RestaurantsState {
   final RestaurantListStatus restaurantListStatus;
-  final List<RestaurantDto?> restaurantList;
+  List<RestaurantDto?> restaurantList;
 
 
   RestaurantsState({
     this.restaurantListStatus = const InitialRestaurantListStatus(),
-    this.restaurantList = const []
+    required this.restaurantList,
   });
 
   RestaurantsState copyWith(

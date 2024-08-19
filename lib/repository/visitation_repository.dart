@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:edirne_gezgini_ui/constants.dart' as constants;
+import 'package:edirne_gezgini_ui/util/auth_credential_store.dart';
+import 'package:get_it/get_it.dart';
 
 import '../model/api_response.dart';
 import '../model/dto/create_visitation_dto.dart';
@@ -10,10 +12,11 @@ import '../util/http_request/rest_client.dart';
 
 class VisitationRepository {
   final String visitationApiUrl = constants.visitationApiUrl;
-  final String token = "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI2ZGIwYzhhMi1iYjM5LTQzMjgtYmUxMC02ZTZmZTgyM2FkMzQiLCJpYXQiOjE3MTcyMzc0OTEsImV4cCI6MTcxNzUyNTQ5MX0.Rvli1ImryWE7qEl3x4IE1InyaH9DcszX8KgQiNTTfS8";
+  final GetIt getIt = GetIt.instance;
 
   Future<APIResponse> getVisitation(String id) async {
     final url = "$visitationApiUrl/getVisitation/$id";
+    final token = getIt<AuthCredentialStore>().token;
 
     if (token == null) {
       return APIResponse(
@@ -29,6 +32,7 @@ class VisitationRepository {
     final String categoryToString =
         BasePlaceCategoryExtension.categoryToJson(category);
     final url = "$visitationApiUrl/getAllByCategory?category=$categoryToString";
+    final token = getIt<AuthCredentialStore>().token;
 
     if (token == null) {
       return APIResponse(
@@ -44,6 +48,7 @@ class VisitationRepository {
       CreateVisitationDto createVisitationDto) async {
     final url = "$visitationApiUrl/createVisitation";
     final body = createVisitationDto.toMap();
+    final token = getIt<AuthCredentialStore>().token;
 
     if (token == null) {
       return APIResponse(
@@ -58,6 +63,7 @@ class VisitationRepository {
 
   Future<APIResponse> deleteVisitation(String id) async {
     final url = "$visitationApiUrl/deleteVisitation/$id";
+    final token = getIt<AuthCredentialStore>().token;
 
     if (token == null) {
       return APIResponse(
@@ -71,6 +77,7 @@ class VisitationRepository {
 
   Future<APIResponse> getAll() async {
     final url = "$visitationApiUrl/getAll";
+    final token = getIt<AuthCredentialStore>().token;
 
     if (token == null) {
       return APIResponse(
@@ -84,7 +91,7 @@ class VisitationRepository {
 
   Future<APIResponse> getAuthenticatedUserVisitations() async{
     final url = "$visitationApiUrl/getAuthenticatedUserVisitations";
-
+    final token = getIt<AuthCredentialStore>().token;
     if (token == null) {
       return APIResponse(
           httpStatus: HttpStatus.internalServerError,

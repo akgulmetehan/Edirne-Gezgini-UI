@@ -21,4 +21,16 @@ class DataUtil {
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
+  String englishCharacterToTurkish(String text)
+  {
+    List<String> turkishChars = ['ı', 'ğ', 'İ', 'Ğ', 'ç', 'Ç', 'ş', 'Ş', 'ö', 'Ö', 'ü', 'Ü'];
+    List<String> englishChars = ['i', 'g', 'I', 'G', 'c', 'C', 's', 'S', 'o', 'O', 'u', 'U'];
+
+    // Match chars
+    for (int i = 0; i < turkishChars.length; i++) {
+      text = text.replaceAll(englishChars[i], turkishChars[i]);
+    }
+    return text;
+  }
 }

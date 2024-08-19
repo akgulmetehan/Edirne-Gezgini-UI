@@ -49,6 +49,8 @@ class RestClient extends AbstractRestClient {
 
     final jsonData = jsonDecode(response.body);
 
-    return APIResponse.fromJson(jsonData);
+    final apiResponse = APIResponse.fromJson(jsonData);
+
+    return apiResponse;
   }
 }

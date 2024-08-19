@@ -9,7 +9,7 @@ class PlaceDto {
 
   final String location;
 
-  final String image;
+  final String? image;
 
   final PlaceCategory category;
 

@@ -27,7 +27,7 @@ class AccommodationDto {
     return AccommodationDto(
         id: map["id"],
         title: map["title"],
-        image: "",
+        image: map["image"],
         info: map["info"],
         location: map["location"],
         category: AccommodationExtension.fromString(map["category"]));

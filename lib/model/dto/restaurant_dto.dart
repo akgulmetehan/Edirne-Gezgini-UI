@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 
 class RestaurantDto {
   final String id;

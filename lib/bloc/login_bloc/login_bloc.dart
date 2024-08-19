@@ -43,6 +43,8 @@ class LoginBloc extends Bloc<LoginEvent,LoginState> {
             emit(state.copyWith(loginStatus: LoginFailed(message: loginMessage)));
             return;
           }
+          String token = loginResponse.result!;
+          authStore.token = token;
 
           //get current user
           final getUserByEmailResponse = await userService.getUserByEmail(state.email!);
@@ -50,14 +52,12 @@ class LoginBloc extends Bloc<LoginEvent,LoginState> {
 
           if(getUserByEmailMessage != "success") {
             emit(state.copyWith(loginStatus: LoginFailed(message: getUserByEmailMessage)));
+            return;
           }
 
           UserDto currentUser = getUserByEmailResponse.result!;
-          String token = loginResponse.result!;
 
           //set auth credentials
-
-          authStore.token = token;
           authStore.currentUser = currentUser;
 
           emit(state.copyWith(loginStatus: LoginSuccess()));

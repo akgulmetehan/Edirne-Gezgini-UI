@@ -9,13 +9,15 @@ import 'package:edirne_gezgini_ui/util/http_request/client_entity.dart';
 import 'package:edirne_gezgini_ui/util/http_request/rest_client.dart';
 import 'package:get_it/get_it.dart';
 
+import '../util/auth_credential_store.dart';
+
 class PlaceRepository {
   final String placeApiUrl = constants.placeApiUrl;
   final GetIt getIt = GetIt.instance;
-  final String token = "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI2ZGIwYzhhMi1iYjM5LTQzMjgtYmUxMC02ZTZmZTgyM2FkMzQiLCJpYXQiOjE3MTY5MDk0NjQsImV4cCI6MTcxNzE5NzQ2NH0.-GyFtV_nEpf8bQzSQgzWl4MQ_--3UYCKbo1OwlBE4wA";
 
   Future<APIResponse> getPlace(String id) async {
     final String url = "$placeApiUrl/getPlace/$id";
+    final String? token = getIt<AuthCredentialStore>().token;
 
     if(token == null){
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
@@ -28,6 +30,7 @@ class PlaceRepository {
 
   Future<APIResponse> getAll() async{
     final String url = "$placeApiUrl/getAll";
+    final String? token = getIt<AuthCredentialStore>().token;
 
     if(token == null){
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
@@ -39,7 +42,8 @@ class PlaceRepository {
 
   Future<APIResponse> getAllByCategory(PlaceCategory category) async {
     final String categoryString = PlaceCategoryExtension.categoryToJson(category);
-    final String url = "$placeApiUrl/getPlaceBtCategory?category=$categoryString";
+    final String url = "$placeApiUrl/getAllByCategory?category=$categoryString";
+    final String? token = getIt<AuthCredentialStore>().token;
 
     if(token == null){
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
@@ -51,6 +55,7 @@ class PlaceRepository {
 
   Future<APIResponse> createPlace(CreatePlaceDto dto) async{
     final String url = "$placeApiUrl/createPlace";
+    final String? token = getIt<AuthCredentialStore>().token;
 
     if(token == null){
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
@@ -64,6 +69,7 @@ class PlaceRepository {
 
   Future<APIResponse> updatePlace(UpdatePlaceDto dto) async{
     final String url = "$placeApiUrl/updatePlace";
+    final String? token = getIt<AuthCredentialStore>().token;
 
     if(token == null){
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");
@@ -77,6 +83,7 @@ class PlaceRepository {
 
   Future<APIResponse> deletePlace(String id) async{
     final String url = "$placeApiUrl/deletePlace/$id";
+    final String? token = getIt<AuthCredentialStore>().token;
 
     if(token == null){
       return APIResponse(httpStatus: HttpStatus.internalServerError, message: "error while retrieving token");

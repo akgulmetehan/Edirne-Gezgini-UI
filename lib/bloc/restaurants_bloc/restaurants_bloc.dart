@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class RestaurantsBloc extends Bloc<RestaurantsEvent, RestaurantsState> {
   final RestaurantService restaurantService;
 
-  RestaurantsBloc({required this.restaurantService}) : super(RestaurantsState()) {
+  RestaurantsBloc({required this.restaurantService}) : super(RestaurantsState(restaurantList: [])) {
     on<GetRestaurantList>((event,emit) async {
       emit(state.copyWith(restaurantListStatus: GetRestaurantListPending()));
 
