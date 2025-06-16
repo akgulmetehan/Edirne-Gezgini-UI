@@ -1,16 +1,52 @@
-# edirne_gezgini_ui
+# 📍 Edirne Gezgini
 
-A new Flutter project.
+**Edirne Gezgini** is a user-friendly mobile application designed to help both locals and tourists discover the historical and cultural richness of Edirne, Turkey. Whether you're looking for iconic landmarks, authentic local cuisine, or a place to stay, Edirne Gezgini provides all the information you need — right at your fingertips.
 
-## Getting Started
+## ✨ Features
 
-This project is a starting point for a Flutter application.
+- 🏛 **Cultural & Historical Sites**: Discover detailed information about Edirne’s must-see landmarks and heritage locations.
+- 🍽 **Local Cuisine**: Explore restaurants and dishes unique to Edirne’s culinary culture.
+- 🏨 **Accommodation Options**: Find the best places to stay, from budget-friendly to luxurious.
+- 🗺 **Smart Navigation**: Get directions and practical location info to plan your trip effectively.
+- 📱 **Clean UI**: Enjoy a smooth and intuitive user experience designed with simplicity in mind.
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠 Tech Stack
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+| Layer     | Technology                  |
+|-----------|-----------------------------|
+| Frontend  | Flutter with BLoC Architecture |
+| Backend   | Java Spring Boot            |
+| Database  | MySQL                       |
+| Architecture | RESTful API Design / Microservices     |
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Flutter**: Ensures a fast, responsive, and cross-platform UI.
+- **BLoC (Business Logic Component)**: Offers scalable and maintainable state management.
+- **Spring Boot**: Provides a robust and secure backend with RESTful APIs.
+- **MySQL**: Stores structured data like landmarks, restaurants, and user preferences.
+
+## 🚀 Getting Started
+
+> You can clone the project and run it locally.
+
+## 🙌 Contributors
+
+Thanks to the following people who have contributed to this project:
+
+<table>
+  <tr>
+    <td align="center" style="padding: 10px;">
+      <a href="https://github.com/erenefeidi">
+        <img src="https://github.com/erenefeidi.png" width="70px;" alt="erenefeidi" />
+        <br />
+        <sub><b>erenefeidi</b></sub>
+      </a>
+    </td>
+    <td align="center" style="padding: 10px;">
+      <a href="https://github.com/caglasenr">
+        <img src="https://github.com/caglasenr.png" width="70px;" alt="caglasenr" />
+        <br />
+        <sub><b>caglasenr</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>
